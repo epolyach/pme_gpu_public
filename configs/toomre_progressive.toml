@@ -1,0 +1,65 @@
+# Configuration for Toomre model with progressive KRES expansion
+# Tests progressive refinement from KRES=7 to KRES=21
+
+[core]
+kres = 7                     # Starting KRES (will be increased progressively)
+# k0 is computed automatically: k0 = -(kres-1)/2
+
+[grid]
+NR = 31                      # Number of radial (guiding center) points
+Nv = 11                      # Number of velocity/eccentricity points
+NW = 101                      # Orbital phase grid
+NW_orbit = 100001            # Orbit integration grid
+
+# Radial grid parameters
+radial_grid_type = 3         # Type 3: Trapezoid rule
+R_min = 0.03
+R_max = 30.0
+
+# Circulation/velocity grid
+circulation_grid_type = 2    # Type 2: Trapezoid rule
+
+[phase_space]
+optimization_on = false
+full_space = false           # UNIDIRECTIONAL space (v >= 0)
+sharp_df = false
+
+[physics]
+m = 2                        # Azimuthal mode number (bar mode)
+beta = 0.00001               # Gravity softening
+selfgravity = 1.0
+
+[elliptic]
+NZ = 20001
+z_precision = 1e-6
+psi_integration_points = 20001
+
+[tolerances]
+instability_threshold = 1e-3
+orbital_tolerance = 1e-8
+
+[io]
+data_path = "data_toomre"
+save_eigenvectors = true
+save_debug = false
+verbose = false
+
+[gpu]
+precision_double = false     # Use Float32 for speed
+
+[eigenvectors]
+iterative = true
+compute = false
+num_output = 10
+# Progressive mode settings
+progressive = true
+kres_start = 7               # Start with KRES=7
+kres_max = 25                # Expand up to KRES=21
+kres_step = 2                # Increase by 2 each iteration
+convergence_tol = 1e-4       # Stop when max eigenvalue change < this
+# Initial shift guesses (for first iteration)
+shift_Omega_p = [0.4397, 0.3916, 0.3607, 0.3309, 0.4284, 0.3035, 0.2786, 0.2558, 0.2348, 0.2154]
+shift_gamma = [0.1256, 0.0516, 0.0483, 0.0441, 0.0420, 0.0412, 0.0384, 0.0355, 0.0327, 0.0300]
+
+[cpu]
+max_threads = 4

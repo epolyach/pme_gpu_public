@@ -1,0 +1,20 @@
+# Exponential Disk Model
+
+[metadata]
+name = "Exponential Disk Model"
+description = "Standard exponential disk model for galactic stability analysis"
+model_type = "ExpDisk"
+reference = "Polyachenko (2005), MNRAS 357, 559"
+
+[model]
+type = "ExpDisk"
+RC = 1.0           # Core radius (model units)
+alpha = 0.42       # Surface density parameter
+lambda = 1.0       # Exponential decay parameter
+N = 6              # Binomial expansion terms
+L0 = 0.1             # Central taper parameter (0 = no taper)
+
+[physics]
+selfgravity = 1.0    # Self-gravity scaling factor (0.0 to 1.0)
+m = 2              # Azimuthal mode number (2 = bar mode)
+beta = 0.0001         # Gravity softening parameter

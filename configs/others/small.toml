@@ -1,0 +1,52 @@
+# Small Test Configuration
+# Fast test for development and debugging
+
+[metadata]
+name = "Small Test Configuration"
+description = "Low-resolution settings for quick testing and validation"
+target_system = "Any system, 4+ cores, 8+ GB RAM"
+runtime = "1-3 minutes"
+
+[core]
+kres = 7           # Minimal resonance terms for ultra-fast testing
+k0   = -3
+
+[grid]
+NR = 15            # Minimal radial grid (was 21)
+Nv = 21            # Minimal circulation grid (was 7)
+NW = 51            # Minimal orbital phase grid (was 51)
+NW_orbit = 1001    # Minimal orbit integration grid (was 3001)
+
+# Radial-circulation grid
+radial_grid_type = 0        # Exponential grid
+alpha = 3.0                 # Scaling parameter for exponential grid
+circulation_grid_type = 5   # Tanh-mapped circulation grid (full h-domain)
+alpha_v = 3.0               # Power/stretch exponent (for type 4); kept for consistency
+v_jump_scale = 0.05                   # Tanh concentration parameter (type 5)
+
+[phase_space]
+optimization_on = true   # For a custom boundary v_min->1 (governed by delta_F0) 
+full_space = false        # Include retrograde (negative Lz), otherwise only prograde stars are present
+delta_F0 = 1e-3          # Circulation grid parameter
+
+[eigenvectors]
+compute = false
+num_output = 6
+
+[io]
+data_path = "data_small_test"
+overwrite_data = true     # Always overwrite test data
+verbose = true
+debug = true              # Output Pi elements and additional debug data
+single_precision = false  # Write binary files in single precision (default: false for double)
+binary_output = true      # Enable binary file output
+
+[elliptic]
+# Elliptic function parameters for fast testing
+
+
+[comments]
+description = "small test"
+
+[thermal]
+max_threads = 4

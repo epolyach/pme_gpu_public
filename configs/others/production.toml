@@ -1,0 +1,50 @@
+# Production Configuration
+# High-resolution parameters for research calculations
+
+[metadata]
+name = "Production Configuration"
+description = "High-resolution settings for production research calculations"
+target_system = "HPC clusters, 64+ cores, 128+ GB RAM"
+
+[core]
+kres = 15          # Full resonance resolution
+k0 = -7
+
+[grid]
+NR = 51           # Radial grid
+Nv = 21            # Circulation grid
+NW = 201           # Orbital phase grid 
+NW_orbit = 10001   # Orbit integration grid 
+
+# Radial-circulation grid
+radial_grid_type = 2       # 
+alpha = 3.0                # Scaling parameter for exponential grid
+# R_min = 0.05
+# R_max = 9.95
+circulation_grid_type = 4  # Tanh-mapped circulation grid (full h-domain)
+alpha_v = 3.0               # Power/stretch exponent (type 4)
+# v_jump_scale = 0.05                   # Tanh concentration parameter (type 5)
+
+[phase_space]
+optimization_on = true    # Enable optimized circulation grid (matches MATLAB Optimization_ON = 1)
+full_space = true
+delta_F0 = 1e-3          # Circulation grid parameter
+
+[eigenvectors]
+compute = false
+num_output = 6
+
+[io]
+data_path = "data_production"
+overwrite_data = true    # Safety: don't overwrite accidentally
+verbose = true
+debug = true             # Output Pi elements and additional debug data
+single_precision = false  # Write binary files in double precision for production
+binary_output = true      # Enable binary file output
+
+
+[comments]
+description = "51x21x15, v-grid=5:1.1:0.05"
+
+[thermal]
+max_threads = 4

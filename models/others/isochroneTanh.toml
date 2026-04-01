@@ -1,0 +1,22 @@
+# Isochrone Model with Tanh Taper
+
+[metadata]
+name = "Isochrone Model - Tanh Taper"
+description = "Kalnajs isochrone model with customized tanh taper function for central angular momentum"
+model_type = "IsochroneTaperTanh"
+reference = "Custom implementation based on ZH taper"
+version = "1.0"
+
+[model]
+type = "IsochroneTaperTanh"
+# Isochrone Model Parameters
+mk = 12                 # Polynomial degree (higher mk = more centrally concentrated)
+
+# Tanh Taper Parameters
+# Rc parameter is not used in energy-dependent tanh taper
+eta = 0.02              # Taper sharpness parameter (should be small)
+
+[physics]
+beta = 0.0001               # Gravity softening parameter
+selfgravity = 1.0           # Self-gravity scaling factor (0.0 to 1.0)
+

@@ -1,0 +1,25 @@
+# Isochrone Model with JH Taper (Jalali & Hunter 2005)
+
+[metadata]
+name = "Isochrone Model - JH Taper"
+description = "Kalnajs isochrone model with Jalali-Hunter (2005) central taper for negative angular momentum"
+model_type = "IsochroneTaperJH"
+reference = "Kalnajs (1976) ApJ 205, 751; Jalali & Hunter (2005) ApJ 630, 804"
+version = "1.0"
+
+[model]
+type = "IsochroneTaperJH"
+
+    [model.parameters]
+    # Isochrone Model Parameters
+    m = 12                  # Polynomial degree (higher m = more centrally concentrated)
+    unit_mass = 1.0         # Total mass in model units
+    unit_length = 1.0       # Scale length in model units
+    
+    # JH Taper Parameters (automatically applied for h <= 0)
+    # No additional parameters needed - taper is intrinsic to JH formulation
+
+[physics]
+m = 2                      # Azimuthal mode number (2 = bar mode)
+beta = 0.0001             # Gravity softening parameter
+

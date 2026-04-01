@@ -1,0 +1,45 @@
+# Production Configuration - Based on Parent Settings
+# High-resolution parameters matching ISO_JH_GRID0_ALPHA3_AJ_BETA1e-5_PROD21
+
+[metadata]
+name = "Production Configuration - Parent Settings"
+description = "High-resolution settings matching reference calculations (NL=81, NI=21)"
+target_system = "HPC clusters, 64+ cores, 128+ GB RAM"
+
+[core]
+kres = 15          # Full resonance resolution
+k0 = -7            # Resonance offset
+
+[grid]
+NR = 81            # Radial grid (was NL in old version)
+Nv = 21            # Circulation grid (was NI in old version)
+NW = 501           # Orbital phase grid
+NW_orbit = 10001   # Fine orbit integration grid
+
+# Radial-circulation grid - PARENT SETTINGS
+radial_grid_type = 0        # Exponential-logarithmic grid
+alpha = 3.0                 # Scaling parameter (was alpha1)
+circulation_grid_type = 2   # Linear circularity grid (was eccentricity_grid_type)
+
+[phase_space]
+optimization_on = true      # Enable optimized circulation grid
+full_space = true           # Include retrograde orbits
+delta_F0 = 1e-3            # Circulation grid parameter
+
+[eigenvectors]
+compute = false
+num_output = 6
+
+[io]
+data_path = "data_production"
+overwrite_data = true
+verbose = true
+debug = false
+single_precision = false
+binary_output = true
+
+[comments]
+description = "81x21x15, exponential radial grid (type 0), alpha=3.0"
+
+[thermal]
+max_threads = 4

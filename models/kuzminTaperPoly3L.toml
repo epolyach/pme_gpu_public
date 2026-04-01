@@ -1,0 +1,23 @@
+# Kuzmin-Toomre Model with Poly3 Taper in Angular Momentum (L) Space
+
+[metadata]
+name = "Kuzmin-Toomre Model with Poly3 L-Taper"
+description = "Kuzmin-Toomre disk with Kalnajs (1976) distribution function with piecewise cubic polynomial taper in L space: T(L) = 0.5 + 0.75*x - 0.25*x^3 for 0 <= x <= 1, where x = L/L_*. Based on Equation (1) from LinearMatrix.pdf adapted to L. Much simpler derivatives than circulation (v) taper. Implements equations A14-A17."
+model_type = "KuzminTaperPoly3L"
+reference = "Kuzmin (1956); Toomre (1963); Kalnajs (1976) ApJ 205, 751; piecewise cubic polynomial taper in angular momentum space"
+version = "1.0"
+
+[model]
+type = "KuzminTaperPoly3L"
+mk = 6                    # Polynomial degree (controls concentration)
+                           # Common values: 6, 9, 12, 15
+L_star = 0.25               # Poly3 taper parameter (angular momentum scale)
+                           # Smaller L_star gives sharper transition at L=0
+                           # Also accepts L_0 for backward compatibility
+unit_mass = 1.0            # Unit mass (GM = 1 in normalized units)
+unit_length = 1.0          # Unit length (b = 1 in normalized units)
+
+[physics]
+m = 2                      # Azimuthal mode number (2 = bar mode, 3 = spiral mode)
+beta = 0.0001            # Gravity softening parameter
+selfgravity = 1.0          # Self-gravity scaling factor (0.0 to 1.0)

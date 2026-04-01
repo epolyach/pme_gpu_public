@@ -1,0 +1,62 @@
+# Distributed PME Configuration
+# Optimized for multi-node computing across GPU and CPU nodes
+
+[metadata]
+name = "Distributed Multi-Node Configuration"
+description = "Configuration for distributed computing across gpu1, gpu2, gpu3, and haruka"
+target_system = "Multi-node cluster with 3x A6000 GPUs + 256GB RAM CPU node"
+runtime = "Variable, depends on problem size"
+
+[core]
+kres = 7           # Minimal resonance terms for ultra-fast testing
+k0 = -3
+
+[grid]
+NR = 15            # Minimal radial grid (was 21)
+Nv = 9             # Minimal circulation grid (was 7)
+NW = 51            # Minimal orbital phase grid (was 51)
+NW_orbit = 1001    # Minimal orbit integration grid (was 3001)
+
+# Radial-circulation grid
+radial_grid_type = 0        # Exponential grid
+alpha = 3.0                 # Scaling parameter for exponential grid
+circulation_grid_type = 5  # Tanh-mapped circulation grid (full h-domain)
+alpha_v = 3.0               # Power/stretch exponent (type 4)
+v_jump_scale = 0.05                   # Tanh concentration parameter (type 5)
+
+[phase_space]
+optimization_on = true   # Custom boundary optimization
+full_space = true        # Include retrograde orbits
+delta_F0 = 1e-2          # Circulation grid parameter
+
+[eigenvectors]
+compute = false          # Calculate eigenvectors for mode analysis
+num_output = 6           # Save top 10 modes
+
+[io]
+data_path = "data_distributed"
+overwrite_data = true
+verbose = true
+debug = true           # Set to true for detailed debugging
+single_precision = false
+
+[physics]
+beta = 0.1              # Gravity softening parameter
+
+[elliptic]
+# Grid points for elliptic integrals
+
+# Distributed computing specific settings
+[distributed]
+# This section can be used for distributed-specific parameters
+julia_path_gpu = '/home/evgeny.polyachenko/local/julia/bin/julia'
+julia_path_cpu = 'julia'
+remote_dir_gpu = '/home/evgeny.polyachenko/Astronomy/Normal_modes/PMED'
+remote_dir_cpu = '/home/epolyach/Data/WORK/Normal_modes/PMED'
+enable_load_balancing = true
+chunk_size_optimization = true
+network_timeout = 300   # Network timeout in seconds
+data_transfer_compression = false  # Disable for local network
+
+[thermal]
+max_threads = 4

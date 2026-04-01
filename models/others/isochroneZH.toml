@@ -1,0 +1,24 @@
+# Isochrone Model with ZH Taper (Zang & Hohl 1978)
+
+[metadata]
+name = "Isochrone Model - ZH Taper"
+description = "Kalnajs isochrone model with Zang-Hohl (1978) smooth taper for negative angular momentum"
+model_type = "IsochroneTaperZH"
+reference = "Kalnajs (1976) ApJ 205, 751; Zang & Hohl (1978) ApJ 226, 521"
+version = "1.0"
+
+[model]
+type = "IsochroneTaperZH"
+# Isochrone Model Parameters
+mk = 8                 # Polynomial degree (higher mk = more centrally concentrated)
+
+# ZH Taper Parameters
+# Jc = 0.25           # Cutoff angular momentum for taper (model units)
+# Alternative: specify Rc instead of Jc (uncomment next line and comment Jc above)
+Rc = 5.0              # Cutoff radius (Jc calculated automatically from Rc)
+eta = 0.02            # Taper strength parameter (1.0 = standard)
+
+[physics]
+beta = 0.0001                # Gravity softening parameter
+selfgravity = 1.0          # Self-gravity scaling factor (0.0 to 1.0)
+

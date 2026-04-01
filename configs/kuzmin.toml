@@ -1,0 +1,68 @@
+# Configuration for plain Kuzmin-Toomre model
+# Unidirectional grid (v >= 0) to match the unidirectional DF (L >= 0)
+
+[core]
+model_file = "models/kuzmin.toml"
+kres = 7                    # Number of resonance points
+
+[grid]
+NR = 61                     # Number of radial (guiding center) points
+Nv = 21                     # Number of velocity/eccentricity points (unidirectional)
+NW = 501                    # Minimal orbital phase grid
+NW_orbit = 100001           # Minimal orbit integration grid
+
+# Radial grid parameters
+radial_grid_type = 3
+R_min = 0.01
+R_max = 20.0
+
+# Circulation/velocity grid
+circulation_grid_type = 3   # Type 2: Trapezoid / Type 3: Simpson
+
+[phase_space]
+optimization_on = false     # Enable grid optimization
+full_space = false          # Use UNIDIRECTIONAL space (v >= 0, L >= 0)
+sharp_df = true             # Enable sharp DF extension at L=0 (equations 3.101-3.102)
+Omega_2_lim = 1             # Omega_2 at L=0: +1=L->0+, 0=zero, -1=L->0-
+                            # +1 recommended for unidirectional models
+
+[physics]
+m = 2                       # Azimuthal mode number (bar mode)
+beta = 0.00001             # Gravity softening
+selfgravity = 1.0           # Self-gravity scaling
+
+[elliptic]
+NZ = 20001
+z_precision = 1e-6
+psi_integration_points = 20001
+
+[tolerances]
+instability_threshold = 1e-3
+orbital_tolerance = 1e-8
+
+[io]
+data_path = "data_kuzmin"
+save_eigenvectors = true
+save_debug = true
+max_display_modes = 12
+
+[gpu]
+precision_double = false    # Use Float32 to save memory
+
+[cpu]
+precision_double = false    # Use Float32 for Pi-elements and K-matrix to save memory
+max_threads = 4
+
+[eigenvectors]
+iterative = false
+compute = false
+num_output = 12
+# Progressive mode settings
+progressive = true
+kres_start = 7               # Start with KRES=7
+kres_max = 31                # Expand up to KRES=21
+kres_step = 2                # Increase by 2 each iteration
+convergence_tol = 1e-4       # Stop when max eigenvalue change < this
+# Initial shift guesses (for first iteration)
+# shift_Omega_p = [0.9008, 0.4609, 1.2694, 0.3555, 0.2680, 0.2076, 0.8056, 0.8849, 0.8639, 1.7125]
+# shift_gamma = [0.8555, 0.2390, 0.1910, 0.1376, 0.0665, 0.0322, 0.0288, 0.0283, 0.0281, 0.0262]

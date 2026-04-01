@@ -1,0 +1,22 @@
+# Plain Kuzmin-Toomre Model (no taper)
+
+[metadata]
+name = "Kuzmin-Toomre Model - Plain"
+description = "Kalnajs Kuzmin-Toomre model without taper, unidirectional formulation (L ≥ 0). Implements equations A14-A17 from LinearMatrix.pdf"
+model_type = "Kuzmin"
+reference = "Kuzmin (1956); Toomre (1963); Kalnajs (1976) ApJ 205, 751"
+version = "1.0"
+
+[model]
+type = "Kuzmin"
+# Kuzmin-Toomre Model Parameters
+mk = 6                  # Polynomial degree (higher mk = more centrally concentrated)
+                        # Common values: 6, 9, 12, 15
+                        # mk = 12 is a typical choice for galactic disk models
+unit_mass = 1.0         # Unit mass (normalized units)
+unit_length = 1.0       # Unit length (normalized units)
+
+[physics]
+m = 2                   # Azimuthal mode number (2 = bar mode, 3 = spiral mode)
+beta = 0.00001           # Gravity softening parameter
+selfgravity = 1.0       # Self-gravity scaling factor (0.0 to 1.0)

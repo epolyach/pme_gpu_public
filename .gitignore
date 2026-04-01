@@ -1,0 +1,50 @@
+# Julia
+Manifest.toml
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+
+# OS
+.DS_Store
+Thumbs.db
+*~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# MATLAB autosave files (ignore everywhere)
+*.asv
+
+# Temporary files
+*.tmp
+*.temp
+
+# Data directories with binary output files
+data_*/
+*.bin
+*.dat
+*.csv
+hist_bash.txt
+
+# Specific directories
+Original_Matlab_C/
+
+# Image files only in specific directories
+plots/*.png
+plots/*.eps
+Original_Matlab_C/*.png
+Original_Matlab_C/*.eps
+
+# Temporary outputs - keep root clean
+*.log
+log*.txt
+error*.txt
+*_comparison.txt
+*_comparison.png
+*_comparison.eps
+*.backup
+*.backup[0-9]
+

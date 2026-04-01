@@ -1,0 +1,47 @@
+# Configuration for Miyamoto model with exponential taper test run
+# Unidirectional grid (v >= 0) to match the unidirectional DF
+
+[core]
+kres = 15                   # Number of resonance points
+
+[grid]
+NR = 81                     # Number of radial (guiding center) points
+Nv = 21                     # Number of velocity/eccentricity points (unidirectional)
+NW = 201                    # Minimal orbital phase grid 
+NW_orbit = 10001            # Minimal orbit integration grid 
+
+# Radial grid parameters
+radial_grid_type = 0
+alpha = 3.0
+
+# radial_grid_type = 3
+# R_min = 0.03  
+# R_max = 10.0
+
+# Circulation/velocity grid
+circulation_grid_type = 3   # Type 3: Simpson rule
+
+[phase_space]
+optimization_on = false     # Enable grid optimization
+full_space = false          # Use UNIDIRECTIONAL space (v >= 0) with `false`
+delta_F0 = 1e-3             # Circulation grid parameter
+sharp_df = false            # Enable sharp DF extension (equations 3.101-3.102)
+Omega_2_lim = 1             # Omega_2 at L=0: +1=L->0+, 0=zero, -1=L->0-
+
+[physics]
+m = 2                       # Azimuthal mode number (bar mode)
+beta = 0.0001               # Gravity softening
+selfgravity = 1.0           # Self-gravity scaling
+
+[tolerances]
+instability_threshold = 1e-3
+orbital_tolerance = 1e-8
+
+[io]
+data_path = "data_miyamoto_taper"
+save_eigenvectors = true
+save_debug = true
+
+[cpu]
+precision_double = true  # Use Float64 for Pi-elements and K-matrix
+max_threads = 4

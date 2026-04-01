@@ -1,0 +1,53 @@
+# Configuration for Isochrone model with ZH (Zang-Hohl) taper
+# Unidirectional grid (v >= 0) to match the unidirectional DF (L >= 0)
+
+[core]
+kres = 21                   # Number of resonance points
+
+[grid]
+NR = 51                     # Number of radial (guiding center) points
+Nv = 31                     # Number of velocity/eccentricity points (unidirectional)
+NW = 201                    # Minimal orbital phase grid 
+NW_orbit = 40001           # Minimal orbit integration grid 
+
+# Radial grid parameters
+radial_grid_type = 3
+R_min = 0.01  
+R_max = 2.5
+
+# Circulation/velocity grid
+circulation_grid_type = 3   # Type 3: Simpson 
+
+[phase_space]
+optimization_on = true     # Enable grid optimization
+full_space = true          # Use UNIDIRECTIONAL space (v >= 0, L >= 0)
+sharp_df = false             # Enable sharp DF extension at L=0
+Omega_2_lim = 0             # Omega_2 at L=0: +1=L->0+, 0=zero, -1=L->0-
+                            # +1 recommended for unidirectional models
+
+[physics]
+m = 2                       # Azimuthal mode number (bar mode)
+beta = 0.0001              # Gravity softening
+selfgravity = 1.0           # Self-gravity scaling
+
+[elliptic]
+NZ = 20001
+z_precision = 1e-6
+psi_integration_points = 20001
+
+[tolerances]
+instability_threshold = 1e-3
+orbital_tolerance = 1e-8
+
+[io]
+data_path = "data_isochrone_zh"
+save_eigenvectors = true
+save_debug = true
+max_display_modes = 12
+
+[gpu]
+precision_double = false    # Use Float32 to save memory
+
+[cpu]
+precision_double = false    # Use Float32 for Pi-elements and K-matrix to save memory
+max_threads = 32

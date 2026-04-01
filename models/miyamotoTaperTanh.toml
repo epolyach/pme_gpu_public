@@ -1,0 +1,22 @@
+# Miyamoto Model with Tanh Taper in Circulation Space
+
+[metadata]
+name = "Miyamoto Model with Tanh Taper"
+description = "Kuzmin-Toomre disk with Plummer potential and Miyamoto (1971) distribution function with tanh taper in circulation space T(v) = (1 + tanh(v/v_0))/2, v = sign(L)*r1/Rc"
+model_type = "MiyamotoTaperTanh"
+reference = "Miyamoto (1971) PASJ 23, 21; Hunter (1992) Ann. NY Acad. Sci. 675, 22; tanh taper in circulation space"
+version = "1.0"
+
+[model]
+type = "MiyamotoTaperTanh"
+n_M = 3                    # Summation parameter (controls concentration)
+                           # Common values: 1, 2, 3, 4, 5
+v_0 = 0.01                 # Tanh taper parameter (circulation scale)
+                           # Smaller v_0 gives sharper transition at v=0 (L=0)
+unit_mass = 1.0            # Unit mass (GM = 1 in normalized units)
+unit_length = 1.0          # Unit length (a = 1 in normalized units)
+
+[physics]
+m = 2                      # Azimuthal mode number (2 = bar mode, 3 = spiral mode)
+beta = 0.0001              # Gravity softening parameter
+selfgravity = 1.0          # Self-gravity scaling factor (0.0 to 1.0)

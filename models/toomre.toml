@@ -1,0 +1,26 @@
+# Toomre-Zang Model Configuration
+
+[metadata]
+name = "Toomre-Zang Model"
+description = "Toomre-Zang galactic disk model with logarithmic potential and flat rotation curve"
+model_type = "Toomre"
+reference = "Toomre (1981) in 'Structure and Evolution of Normal Galaxies'; Zang (1976) PhD thesis"
+version = "1.0"
+
+[model]
+type = "Toomre"
+# Toomre-Zang Model Parameters
+L0 = 1.0                # Angular momentum scale (normalized units)
+                        # Controls the strength of the Zang taper
+n_zang = 4              # Exponent for Zang taper function
+                        # Taper = [1 + (L0/L)^n_zang]^{-1}
+                        # n_zang = 0: no taper, n_zang > 0: suppresses low L
+q1 = 7                  # Radial velocity dispersion parameter
+                        # σᵣ₀ = 1/√q1, q_zang = q1 - 1
+                        # Typical values: 5-10
+                        # Higher q1 means lower velocity dispersion
+
+[physics]
+m = 2                   # Azimuthal mode number (2 = bar mode, 3 = spiral mode)
+beta = 0.0001           # Gravity softening parameter
+selfgravity = 1.0       # Self-gravity scaling factor (0.0 to 1.0)

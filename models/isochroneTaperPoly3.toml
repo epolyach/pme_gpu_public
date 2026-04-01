@@ -1,0 +1,21 @@
+# Isochrone Model with Poly3 Taper in Circulation Space
+
+[metadata]
+name = "Isochrone Model with Poly3 Taper"
+description = "Kalnajs isochrone model with piecewise cubic polynomial taper in circulation space T(v) = 0.5 + 0.75*x - 0.25*x^3 for |x| <= 1, v = sign(L)*r1/Rc, x = v/v_0"
+model_type = "IsochroneTaperPoly3"
+reference = "Kalnajs (1976) ApJ 205, 751; piecewise cubic polynomial taper in circulation space"
+version = "1.0"
+
+[model]
+type = "IsochroneTaperPoly3"
+mk = 8                     # Polynomial degree (controls concentration)
+v_0 = 1.0                 # Poly3 taper parameter (circulation scale)
+                           # Smaller v_0 gives sharper transition at v=0 (L=0)
+unit_mass = 1.0            # Unit mass (GM = 1 in normalized units)
+unit_length = 1.0          # Unit length (b = 1 in normalized units)
+
+[physics]
+m = 2                      # Azimuthal mode number (2 = bar mode, 3 = spiral mode)
+beta = 0.0001              # Gravity softening parameter
+selfgravity = 1.0          # Self-gravity scaling factor (0.0 to 1.0)

@@ -1,0 +1,53 @@
+# Configuration for plain Isochrone model
+# Unidirectional grid (v >= 0) to match the unidirectional DF (L >= 0)
+
+[core]
+kres = 11                    # Number of resonance points
+
+[grid]
+NR = 101                    # Number of radial (guiding center) points
+Nv = 31                     # Number of velocity/eccentricity points (unidirectional)
+NW = 501                    # Minimal orbital phase grid 
+NW_orbit = 100001           # Minimal orbit integration grid 
+
+# Radial grid parameters
+radial_grid_type = 4        # Type 3/4: Trapezoid/Simpson rule
+R_min = 0.01 # 0.03162278 
+R_max = 20.0 # 31.62278
+
+# Circulation/velocity grid
+circulation_grid_type = 3     # Type 2/3: Trapezoid/Simpson rule
+# circulation_grid_type = 4   # Type 2: Trapezoid rule
+# alpha_v = 2.0
+
+[phase_space]
+optimization_on = false     # Enable grid optimization
+full_space = false          # Use UNIDIRECTIONAL space (v >= 0, L >= 0)
+sharp_df = false            # Enable sharp DF extension at L=0 (equations 3.101-3.102)
+Omega_2_lim = 1             # Omega_2 at L=0: +1=L->0+, 0=zero, -1=L->0-
+                            # +1 recommended for unidirectional models
+
+[physics]
+m = 2                       # Azimuthal mode number (bar mode)
+beta = 0.00001              # Gravity softening
+selfgravity = 1.0           # Self-gravity scaling
+
+[elliptic]
+NZ = 20001
+z_precision = 1e-6
+psi_integration_points = 20001
+
+[tolerances]
+instability_threshold = 1e-3
+orbital_tolerance = 1e-8
+
+[io]
+data_path = "data_toomre"
+save_eigenvectors = true
+save_debug = true
+
+[gpu]
+precision_double = false  # Use Float32 to save memory
+
+[cpu]
+max_threads = 4

@@ -1,0 +1,18 @@
+# Exponentially Tapered Isochrone Model
+# Based on Kalnajs (1976) isochrone with exponential taper function
+
+[metadata]
+name = "Exponentially Tapered Isochrone Model"
+description = "Kalnajs isochrone model with exponential taper function for angular momentum cutoff"
+model_type = "IsochroneTaperExp"
+reference = "Kalnajs (1976), ApJ 205, 751; with exponential taper"
+
+[model]
+type = "IsochroneTaperExp"
+mk = 12            # Power-law index for distribution function
+# L0 is now dynamic, based on circular orbit angular momentum
+eta = 0.1          # Taper strength parameter
+
+[physics]
+beta = 0.0001               # Gravity softening parameter
+selfgravity = 1.0           # Self-gravity scaling factor (0.0 to 1.0)

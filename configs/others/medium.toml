@@ -1,0 +1,45 @@
+# Medium Test Configuration
+# Validation test with intermediate resolution
+
+[metadata]
+name = "Medium Test Configuration"  
+description = "Medium-resolution settings for validation against known results"
+target_system = "Workstations, 8+ cores, 16+ GB RAM"
+runtime = "10-30 minutes"
+
+[core]
+kres = 15           # Standard resonance terms
+k0 = -7
+
+[grid]
+NR = 61            # Radial grid
+Nv = 21            # Circulation grid
+NW_orbit = 5001    # Fine orbit integration grid (accurate orbital integration computing frequencies, actions, etc.)
+NW = 101           # Medium orbital integration grid (everywhere else - matrix calculations, storage)
+
+# Radial-circulation grid
+radial_grid_type = 0        # Exponential grid
+alpha = 3.0                 # Scaling parameter for exponential grid
+circulation_grid_type = 5  # Tanh-mapped circulation grid (full h-domain)
+alpha_v = 3.0               # Power/stretch exponent (type 4)
+v_jump_scale = 0.05                   # Tanh concentration parameter (type 5)
+
+[phase_space]
+optimization_on = true    # Enable optimized circulation grid (matches MATLAB Optimization_ON = 1)
+full_space = true         # Include negative Lz for JH/ZH taper testing
+delta_F0 = 1e-3          # Circulation grid parameter
+
+[eigenvectors]
+compute = true
+num_output = 6
+
+[io]
+data_path = "data_medium_test"
+overwrite_data = true     # Always overwrite test data
+verbose = true
+debug = true             # Output Pi elements and additional debug data
+single_precision = false   # Write binary files in single precision (default: false for double)
+
+
+[thermal]
+max_threads = 4

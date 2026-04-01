@@ -1,0 +1,70 @@
+# Production Configuration
+# High-resolution parameters for research calculations
+
+[metadata]
+name = "Production Configuration"
+description = "High-resolution settings for production research calculations"
+target_system = "HPC clusters, 64+ cores, 128+ GB RAM"
+
+[core]
+kres = 15          # Full resonance resolution
+k0 = -7
+
+[grid]
+NL = 81            # Radial grid
+NI = 21            # Eccentricity grid
+NW_orbit = 10001   # Fine orbit integration grid (accurate orbital integration grid computing frequencies, actions, etc.)
+NW = 501           # Medium orbital integration grid (everywhere else - matrix calculations, storage)
+NZ = 10001         # psi(z) function grid
+# Optimized for ExpDisk smooth profiles
+radial_grid_type = 0        # Exponential-logarithmic grid
+eccentricity_grid_type = 2  # Linear circularity grid
+
+# Radial grid parameters
+# Applies to grid_type=0 (exponential grid: Rc = -α₁ log(u))
+alpha1 = 3.0
+# Applies to grid_type=1 (rational grid: Rc = α₂(1-u)/u)
+alpha2 = 2.0
+# Applies to grid_type=2 (linear grid: uniform spacing)
+R_linear_start = 0.3
+R_linear_end = 30.0
+# Applies to grid_type=3 (logarithmic grid: log-spaced points)
+R_log_start = -1.0
+R_log_end = 1.301
+# Applies to grid_type=4 (hyperbolic tangent grid: Rc = α₃ atanh(1-u))
+alpha3 = 10.0
+# Applies to grid_type=5,6,7 (exponential-logarithmic and omega-based grids)
+R_min = 0.1
+R_max = 16.0
+# Applies to grid_type=6 (omega-based adaptive grid)
+p_adaptive = 1.3
+Rsc_adaptive = 0.18
+Om_0_adaptive = 12.0
+# Applies to grid_type=7 (alternative omega-based grid)
+p_alternative = 0.025
+Rsc_alternative = 1.0
+Om_0_alternative = 1.0
+
+# Eccentricity grid parameter
+delta_F0 = 1e-3
+
+[computation]
+optimization_on = true    # Enable optimized eccentricity grid (matches MATLAB Optimization_ON = 1)
+full_space = true
+
+[io]
+data_path = "data_production"
+overwrite_data = true    # Safety: don't overwrite accidentally
+verbose = true
+debug = false             # Output Pi elements and additional debug data
+single_precision = false  # Write binary files in double precision for production
+
+[tolerances]
+# Numerical precision parameters for calculations
+z_precision = 1e-6              # Auxiliary function grid precision
+psi_integration_points = 10001  # Points for psi(z) integration
+instability_threshold = 1e-3    # Threshold for unstable modes
+orbital_tolerance = 1e-8        # Tolerance for orbital calculations
+
+[thermal]
+max_threads = 4

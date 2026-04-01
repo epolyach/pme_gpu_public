@@ -30,53 +30,15 @@ GPU-accelerated solver for galactic disk normal modes using the Polyachenko Matr
    ```bash
    nvidia-smi
    ```
-3. **IMPORTANT**: This project requires **CUDA.jl version 5.x**, which needs an NVIDIA driver supporting **CUDA 12.x or higher**. Check your driver's CUDA version in the `nvidia-smi` output.
-
-4. CUDA.jl (the Julia CUDA package) will automatically download a compatible CUDA toolkit on first use. No separate CUDA Toolkit installation is required.
-5. In Julia, test GPU availability:
+3. CUDA.jl (the Julia CUDA package) will automatically download a compatible CUDA toolkit on first use. No separate CUDA Toolkit installation is required.
+4. In Julia, test GPU availability:
    ```julia
-   using Pkg; Pkg.add("CUDA")
    using CUDA
    CUDA.functional()   # should return true
    CUDA.versioninfo()  # prints driver and toolkit info
    ```
 
-#### Troubleshooting CUDA Version Mismatch
-
-If you see the error:
-```
-Error: This version of CUDA.jl requires an NVIDIA driver for CUDA 12.x or higher (yours only supports up to CUDA 11.x)
-ERROR: CUDA error (code 3, CUDA_ERROR_NOT_INITIALIZED)
-```
-
-This happens because:
-- **Julia 1.10+** requires **CUDA.jl 5.x**, which requires **NVIDIA driver supporting CUDA 12.x+**
-- **Julia 1.9** can use **CUDA.jl 4.x**, which works with **NVIDIA driver supporting CUDA 11.x**
-
-You have two options:
-
-**Option 1: Upgrade your NVIDIA driver (Recommended)**
-
-Download and install the latest driver from <https://www.nvidia.com/drivers> that supports CUDA 12.x or higher. This is the best option for performance and compatibility.
-
-**Option 2: Downgrade Julia to version 1.9**
-
-If you cannot upgrade your driver (e.g., on older GPUs or restricted systems):
-
-1. Install Julia 1.9.x from <https://julialang.org/downloads/oldreleases/>
-2. Modify `Project.toml` to use CUDA.jl 4.x:
-   ```toml
-   [compat]
-   CUDA = "4"
-   julia = "1.9"
-   ```
-3. Remove `Manifest.toml` and reinstall dependencies:
-   ```bash
-   rm Manifest.toml
-   julia --project=. -e 'using Pkg; Pkg.instantiate()'
-   ```
-
-Note: CUDA.jl 4.x supports CUDA 11.x drivers but may have reduced performance or missing features compared to version 5.x.
+### ROCm Installation (AMD GPUs)
 
 1. Install ROCm following the official guide at <https://rocm.docs.amd.com/>.
 2. Verify:
@@ -85,15 +47,44 @@ Note: CUDA.jl 4.x supports CUDA 11.x drivers but may have reduced performance or
    ```
 3. In Julia:
    ```julia
-   using Pkg; Pkg.add("AMDGPU")
    using AMDGPU
    AMDGPU.functional()  # should return true
    ```
 
 ### Julia Dependencies
 
-From the project root, install all dependencies:
+This project ships with a `Manifest.toml` that pins all dependency versions to a tested, compatible combination. From the project root, install all dependencies:
 ```bash
+julia --project=. -e 'using Pkg; Pkg.instantiate()'
+```
+
+> **Important:** Do **not** run `Pkg.update()` unless you know what you are doing. Updating may pull newer versions of CUDA.jl that require a newer NVIDIA driver than the one installed on your system. If you do update and encounter CUDA errors, restore the original `Manifest.toml`:
+> ```bash
+> git checkout Manifest.toml
+> julia --project=. -e 'using Pkg; Pkg.instantiate()'
+> ```
+
+#### Troubleshooting: CUDA Version Mismatch
+
+If you see:
+```
+Error: This version of CUDA.jl requires an NVIDIA driver for CUDA 12.x or higher
+```
+
+This means your `Manifest.toml` has resolved to a CUDA.jl version that is too new for your driver. Restore the shipped Manifest:
+```bash
+git checkout Manifest.toml
+julia --project=. -e 'using Pkg; Pkg.instantiate()'
+```
+
+If the shipped Manifest is also incompatible with your driver, check your CUDA version with `nvidia-smi` and set a compatible CUDA.jl version in `Project.toml`:
+```toml
+[compat]
+CUDA = "5.8"    # for CUDA 11.x drivers
+```
+Then regenerate the Manifest:
+```bash
+rm Manifest.toml
 julia --project=. -e 'using Pkg; Pkg.instantiate()'
 ```
 
@@ -105,7 +96,7 @@ If you are behind a corporate proxy or firewall, Julia may fail to download pack
 ```bash
 export HTTP_PROXY="http://proxy.example.com:8080"
 export HTTPS_PROXY="http://proxy.example.com:8080"
-export JULIA_PKG_SERVER=""  # Disable pkg server if it's blocked
+export JULIA_PKG_SERVER=""  # Disable pkg server if it is blocked
 
 julia --project=. -e 'using Pkg; Pkg.instantiate()'
 ```
@@ -238,6 +229,7 @@ selfgravity = 1.0
 pme_gpu_public/
   run_pme_gpu.jl          # Main GPU entry point
   Project.toml            # Julia project dependencies
+  Manifest.toml           # Pinned dependency versions (tested)
   configs/                # Solver configuration files
   models/                 # Model parameter files
   src/

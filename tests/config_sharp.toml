@@ -1,0 +1,50 @@
+# Shared low-resolution config for sharp-edge models (Isochrone, Miyamoto, Kuzmin)
+# Requires generalized matrix method: sharp_df = true
+
+[core]
+m = 2
+kres = 7
+
+[grid]
+NR = 21
+Nv = 11
+NW = 101
+NW_orbit = 10001
+radial_grid_type = 5
+circulation_grid_type = 3
+R_min = 0.01
+R_max = 10.0
+
+[phase_space]
+optimization_on = false
+full_space = false
+sharp_df = true
+Omega_2_lim = 1
+delta_F0 = 1e-3
+
+[physics]
+m = 2
+beta = 0.0001
+selfgravity = 1.0
+
+[elliptic]
+NZ = 8
+z_precision = 1e-6
+psi_integration_points = 501
+
+[tolerances]
+instability_threshold = 1e-10
+orbital_tolerance = 1e-8
+
+[io]
+save_eigenvectors = false
+save_debug = false
+verbose = true
+max_display_modes = 5
+
+[gpu]
+precision_double = false
+
+[cpu]
+precision_double = false
+max_threads = 4

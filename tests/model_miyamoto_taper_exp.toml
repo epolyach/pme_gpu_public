@@ -1,0 +1,11 @@
+[model]
+type = "MiyamotoTaperExp"
+n_M = 3
+L_0 = 0.2
+unit_mass = 1.0
+unit_length = 1.0
+
+[physics]
+m = 2
+beta = 0.0001
+selfgravity = 1.0

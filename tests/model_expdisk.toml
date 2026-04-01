@@ -1,0 +1,12 @@
+[model]
+type = "ExpDisk"
+RC = 1.0
+alpha = 0.42
+lambda = 1.0
+N = 4
+L0 = 0.1
+
+[physics]
+m = 2
+beta = 0.0001
+selfgravity = 1.0

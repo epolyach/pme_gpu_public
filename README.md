@@ -247,7 +247,7 @@ pme_gpu_public/
 
 ## References
 
-- Polyachenko E.V. (2024), *MNRAS*, -- PME method
+- Polyachenko E.V. (2005), *MNRAS*, 357, 559. doi:10.1111/j.1365-2966.2005.08660.x -- PME method
 - Kalnajs A.J. (1976), *ApJ* 205, 745 -- Kuzmin-Toomre disk models
 - Miyamoto M. (1971), *PASJ* 23, 21 -- Miyamoto disk models
 - Jalali M.A. & Hunter C. (2005), *AJ* 130, 576 -- JH taper

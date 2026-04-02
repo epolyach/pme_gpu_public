@@ -1,30 +1,156 @@
   Activating project at `/Data/epolyach/WORK/Normal_modes/pme_gpu_public`
-┌ Error: This version of CUDA.jl requires an NVIDIA driver for CUDA 12.x or higher (yours only supports up to CUDA 11.4.0)
-└ @ CUDA ~/.julia/packages/CUDA/Il00B/src/initialization.jl:70
-ERROR: LoadError: CUDA error (code 3, CUDA_ERROR_NOT_INITIALIZED)
-Stacktrace:
-  [1] throw_api_error(res::CUDA.cudaError_enum)
-    @ CUDA ~/.julia/packages/CUDA/Il00B/lib/cudadrv/libcuda.jl:30
-  [2] check(f::CUDA.var"#cuDeviceGetCount##0#cuDeviceGetCount##1"{Base.RefValue{Int32}})
-    @ CUDA ~/.julia/packages/CUDA/Il00B/lib/cudadrv/libcuda.jl:37
-  [3] cuDeviceGetCount(count::Base.RefValue{Int32})
-    @ CUDA ~/.julia/packages/GPUToolbox/x8hVh/src/ccalls.jl:32
-  [4] ndevices
-    @ ~/.julia/packages/CUDA/Il00B/lib/cudadrv/devices.jl:148 [inlined]
-  [5] gpu_ndevices
-    @ /Data/epolyach/WORK/Normal_modes/pme_gpu_public/run_pme_gpu.jl:99 [inlined]
-  [6] parse_arguments(cpu_config::PME.Configuration.CPUConfig)
-    @ Main /Data/epolyach/WORK/Normal_modes/pme_gpu_public/run_pme_gpu.jl:166
-  [7] main()
-    @ Main /Data/epolyach/WORK/Normal_modes/pme_gpu_public/run_pme_gpu.jl:228
-  [8] top-level scope
-    @ /Data/epolyach/WORK/Normal_modes/pme_gpu_public/run_pme_gpu.jl:424
-  [9] include(mod::Module, _path::String)
-    @ Base ./Base.jl:306
- [10] exec_options(opts::Base.JLOptions)
-    @ Base ./client.jl:317
- [11] _start()
-    @ Base ./client.jl:550
-in expression starting at /Data/epolyach/WORK/Normal_modes/pme_gpu_public/run_pme_gpu.jl:423
+┌ Warning: Eigenvectors not computed, cannot save to files
+└ @ PME.KEigenvalues /Data/epolyach/WORK/Normal_modes/pme_gpu_public/src/matrix/KEigenvalues.jl:68
 🎮 Detected NVIDIA GPU - using CUDA.jl
 DEBUG: gpu.precision_double=false, cpu.precision_double=false
+
+--- PME GPU Calculation ---
+Config: tests/config_sharp.toml
+Model:  tests/model_isochrone.toml
+GPU:    Device 0 (NVIDIA GeForce RTX 2080 SUPER, 8.3 GB) [CUDA]
+BLAS:   4 threads (max: 4)
+GPU Pi:  Float32 (single) precision
+
+--- FINAL PARAMETERS ---
+Physics:
+  m (azimuthal mode): 2
+  beta (softening):   0.0001
+  selfgravity:        1.0
+Model-specific:
+  mk (Isochrone):     4
+Grid:
+  NR × Nv × kres:     21 × 11 × 7
+  Radial grid:        type=4 (Rmin=0.01, Rmax=10.0)
+  Circulation grid:   type=3
+  k0:                 -3
+  NW (phase):         101
+  NW_orbit:           10001
+GPU Precision:
+  Pi elements:        Float32 (single)
+CPU Precision:
+  Pi elements, K:     Float32 (single)
+Sharp DF:
+  sharp_df:           true
+  Omega_2_lim:        1
+
+Setting up Isochrone model (plain, no taper) (mk=4, selfgravity=1.0)
+
+==================================================
+ARRAY RANGES
+==================================================
+✓ Phase space:
+  Guiding center radius range: 0.01 - 10.0
+  R1 range: 0.0 - 10.0
+  R2 range: 0.01 - 20.0
+  Energy range: -0.5 - -0.0476
+  Angular momentum range: 0.0 - 2.8547
+
+✓ Orbital trajectories:
+  Frequency range Ω₁: 0.0293 - 0.9999
+  Frequency range Ω₂: 0.0147 - 0.5
+  Action range Iᵣ: 0.0 - 2.2423
+
+✓ Distribution function:
+  DF range: 0.000116 - 0.135075
+  ∂DF/∂E range: -3.795878 - -0.007335
+  ∂DF/∂L range: 0.0 - 0.113928
+
+──────────────────────────────────────────────────
+✓ CSV files exported to: data/csv
+
+
+==================================================
+MATRIX ELEMENT CALCULATION
+==================================================
+  Using unified chunked GPU path (devices: [0])
+  Chunked GPU: T=Float32, devices=[0], rows/chunk=231, chunks=1
+✓ Sharp DF validation passed: full_space=false, v[iR,1]=0
+  Launching Chunk 1/1 on GPU 0 (rows 1-231)
+  Collecting Chunk 1/1 from GPU 0... done
+✓ Sharp DF term added
+  Single KRES mode: kres = 7
+
+======================================================================
+PROGRESSIVE KRES EIGENVALUE SOLVE
+======================================================================
+  KRES sequence: [7]
+  Convergence tolerance: 0.0001
+  Grid: 21×11, N=231
+  Solver: full (LAPACK)
+  Collecting top 6 modes per KRES
+  Sharp DF mode: enabled
+
+----------------------------------------------------------------------
+  Iteration 1: KRES = 7 (l ∈ {-3, ..., 3})
+----------------------------------------------------------------------
+  Using pre-computed K matrix...
+    K matrix size: 1617 × 1617 (0.02 GB)
+  Computing full eigenvalue decomposition (LAPACK)...
+    Found 6 eigenvalues
+
+  Eigenvalues (KRES=7, sorted by Ωₚ):
+  ──────────────────────────────────────────────────
+  Rank │           Ωₚ │            γ
+  ──────────────────────────────────────────────────
+     1 │       0.8213 │       0.0246
+     2 │       0.4202 │       0.0373
+     3 │       0.3671 │       0.0880
+     4 │       0.3654 │       0.2025  ← max γ
+     5 │       0.2738 │       0.0285
+     6 │       0.1384 │       0.0337
+  ──────────────────────────────────────────────────
+
+======================================================================
+DOMINANT MODE vs KRES
+======================================================================
+  KRES │           Ωₚ │            γ │    K matrix size
+  ─────┼──────────────┼──────────────┼──────────────────
+     7 │       0.3654 │       0.2025 │     1617 × 1617
+  ─────┴──────────────┴──────────────┴──────────────────
+
+  Eigenvalue history saved to: data/progressive_kres_eigenvalues.csv
+
+======================================================================
+DOMINANT MODE vs KRES
+======================================================================
+  KRES │           Ωₚ │            γ │    K matrix size
+  ─────┼──────────────┼──────────────┼──────────────────
+     7 │       0.3654 │       0.2025 │     1617 × 1617
+  ─────┴──────────────┴──────────────┴──────────────────
+
+  Eigenvalues (KRES=7, sorted by Ωₚ):
+  ──────────────────────────────────────────────────
+  Rank │           Ωₚ │            γ
+  ──────────────────────────────────────────────────
+     1 │       0.8213 │       0.0246
+     2 │       0.4202 │       0.0373
+     3 │       0.3671 │       0.0880
+     4 │       0.3654 │       0.2025  ← max γ
+     5 │       0.2738 │       0.0285
+     6 │       0.1384 │       0.0337
+  ──────────────────────────────────────────────────
+✓ Eigenvalues and eigenvectors calculated (6 total)
+
+================================================================================
+20260401_180015
+
+21x11x7, r_gr=4 (Rmin=0.01, Rmax=10.0), v_gr=3, beta=1e-4
+Radial grid:        type=4 (Rmin=0.01, Rmax=10.0)
+Circulation grid:   type=3
+──────────────────────────────────────────────────
+Rank │           Ωₚ │            γ
+   1 │       0.3654 │       0.2025  ← Dominant
+   2 │       0.3671 │       0.0880
+   3 │       0.4202 │       0.0373
+   4 │       0.1384 │       0.0337
+   5 │       0.2738 │       0.0285
+──────────────────────────────────────────────────
+──────────────────────────────────────────────────
+NW = 101           # Orbital phase grid
+NW_orbit = 10001   # Orbit integration grid
+sharp_df = true    # With g_l(E,L=0) extension
+Runtime: 33.4s (0.56 min)
+
+--- Calculation Complete ---
+✓ Unstable eigenvalues written to CSV file: data/results/unstable_eigenvalues_20260401_180015.csv
+Log saved to: data/run_21x11x101_beta00001_gr4_gv3_20260401_180015.log
